@@ -1,14 +1,14 @@
 package com.collaborativefiltering.engine;
 
 import com.collaborativefiltering.calculator.CosineSimilarityCalculator;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Map.Entry.comparingByValue;
-
+@Component
 public class ProductRecommendationEngine {
 
     private final CosineSimilarityCalculator calculator;

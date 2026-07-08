@@ -9,7 +9,7 @@ import java.util.Map;
 public class InteractionMatrix {
 
     //devolve Map<UserId, Map<ProductId, Score>>
-    public Map<String, Map<String, Double>> matrixBuilder(List<Interaction> interactions) {
+    public static Map<String, Map<String, Double>> matrixBuilder(List<Interaction> interactions) {
         Map<String, Map<String, Double>> matrix = new HashMap<>();
 
         for(Interaction interaction : interactions) {
@@ -22,7 +22,7 @@ public class InteractionMatrix {
     }
 
     //devolve Map<ProductId, Map<UserId, Score>>
-    public Map<String, Map<String, Double>> invert(Map<String, Map<String, Double>> userProductMatrix) {
+    public static Map<String, Map<String, Double>> invert(Map<String, Map<String, Double>> userProductMatrix) {
         Map<String, Map<String, Double>> productUserMatrix = new HashMap<>();
 
         for(Map.Entry<String, Map<String, Double>> extern : userProductMatrix.entrySet()) {

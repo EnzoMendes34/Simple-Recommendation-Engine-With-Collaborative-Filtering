@@ -1,8 +1,11 @@
 package com.collaborativefiltering.calculator;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class CosineSimilarityCalculator {
 
     //fórmula similaridade(A, B) = (Σ scoreA[u] * scoreB[u]) / (√(Σ scoreA[u]²) * √(Σ scoreB[u]²))
