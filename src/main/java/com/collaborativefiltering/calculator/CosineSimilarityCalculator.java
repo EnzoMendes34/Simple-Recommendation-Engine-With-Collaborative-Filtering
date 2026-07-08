@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class CosineSimilarityCalculator {
 
+    //fórmula similaridade(A, B) = (Σ scoreA[u] * scoreB[u]) / (√(Σ scoreA[u]²) * √(Σ scoreB[u]²))
     public double calculateSimilarity(
             String productAId,
             String productBId,
