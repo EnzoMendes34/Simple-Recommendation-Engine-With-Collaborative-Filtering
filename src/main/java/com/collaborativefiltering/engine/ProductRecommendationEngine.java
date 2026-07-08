@@ -26,7 +26,7 @@ public class ProductRecommendationEngine {
         Map<String, Double> userInteractions = userProductMatrix.get(userId);
 
         if (userInteractions == null) {
-            return new ArrayList<>();
+            return getMostPopularProducts(productUserMatrix, allProductsIds);
         }
 
         List<String> productsThatUserDidNotInteractWith = new ArrayList<>();
@@ -52,8 +52,27 @@ public class ProductRecommendationEngine {
             candidateScores.put(candidate, predictedScore);
         }
 
-        return candidateScores.entrySet().stream()
-                .sorted(Map.Entry.<String, Double>comparingByValue().reversed())
-                .map(Map.Entry::getKey).toList();
+        return sortByScoreDescending(candidateScores);
     }
+
+
+    private List<String> getMostPopularProducts(Map<String, Map<String, Double>> productUserMatrix, List<String> productsIds) {
+        Map<String, Double> popularityScores = new HashMap<>();
+
+        for(String product : productsIds){
+            Map<String, Double> userScores = productUserMatrix.get(product);
+
+            double totalScore = (userScores == null) ? 0.0 : userScores.values().stream().mapToDouble(Double::doubleValue).sum();
+
+            popularityScores.put(product, totalScore);
+        }
+
+        return sortByScoreDescending(popularityScores);
+    }
+
+    private List<String> sortByScoreDescending(Map<String, Double> scores) {
+        return scores.entrySet().stream()
+                .sorted(Map.Entry.<String, Double>comparingByValue().reversed()).map(Map.Entry::getKey).toList();
+    }
+
 }
