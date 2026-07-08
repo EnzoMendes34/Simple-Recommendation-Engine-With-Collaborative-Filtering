@@ -1,12 +1,10 @@
 package com.collaborativefiltering.api.service;
 
 import com.collaborativefiltering.api.dtos.request.InteractionRequestDTO;
-import com.collaborativefiltering.api.dtos.request.enums.InteractionType;
 import com.collaborativefiltering.api.dtos.response.RecommendationResponseDTO;
 import com.collaborativefiltering.calculator.CosineSimilarityCalculator;
 import com.collaborativefiltering.engine.ProductRecommendationEngine;
 import com.collaborativefiltering.interaction.*;
-import com.collaborativefiltering.interaction.matrix.InteractionMatrix;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +33,10 @@ public class RecommendationService {
     }
 
     public void registerInteraction(InteractionRequestDTO dto){
+        if(dto == null) {
+            throw new IllegalArgumentException("Interaction cannot be null. Try again");
+        }
+
         Interaction interaction = switch (dto.getType()) {
             case VIEW -> new Impression(dto.getUserId(), dto.getProductId());
             case CLICK -> new Click(dto.getUserId(), dto.getProductId());
@@ -43,6 +45,11 @@ public class RecommendationService {
         };
 
         interactionList.add(interaction);
+    }
+
+    //Apenas para teste
+    public List<Interaction> findAllInteractions(){
+        return interactionList;
     }
 
     public RecommendationResponseDTO getRecommendations(String userId) {
