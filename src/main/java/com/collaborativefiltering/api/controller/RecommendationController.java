@@ -33,6 +33,11 @@ public class RecommendationController {
         return ResponseEntity.ok(service.findAllInteractions());
     }
 
+    @GetMapping("/interactions/{userId}")
+    public ResponseEntity<List<Interaction>> getInteractionsByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(service.findAllInteractionsByUserId(userId));
+    }
+
     @GetMapping("/recommendations/{userId}")
     public ResponseEntity<RecommendationResponseDTO> getRecommendations(@PathVariable String userId) {
         return ResponseEntity.ok(service.getRecommendations(userId));

@@ -17,17 +17,14 @@ import static com.collaborativefiltering.interaction.matrix.InteractionMatrix.ma
 @Service
 public class RecommendationService {
 
-    private final CosineSimilarityCalculator calculator;
     private final ProductRecommendationEngine engine;
     private final ProductService productService;
     private final List<Interaction> interactionList = new ArrayList<>();
 
     public RecommendationService(
-            CosineSimilarityCalculator calculator,
             ProductRecommendationEngine engine,
             ProductService productService
     ) {
-        this.calculator = calculator;
         this.engine = engine;
         this.productService = productService;
     }
@@ -47,9 +44,17 @@ public class RecommendationService {
         interactionList.add(interaction);
     }
 
+    public void registerInteractions(List<Interaction> interactions) {
+        interactionList.addAll(interactions);
+    }
+
     //Apenas para teste
     public List<Interaction> findAllInteractions(){
         return interactionList;
+    }
+
+    public List<Interaction> findAllInteractionsByUserId(String userId) {
+        return interactionList.stream().filter(interact -> interact.userId().equals(userId)).toList();
     }
 
     public RecommendationResponseDTO getRecommendations(String userId) {
