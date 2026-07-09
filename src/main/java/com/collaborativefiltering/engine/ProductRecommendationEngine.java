@@ -11,6 +11,13 @@ import java.util.Map;
 @Component
 public class ProductRecommendationEngine {
 
+    // Constante de regularização somada ao denominador da soma ponderada, evitando tanto divisão
+    // por zero quanto a amplificação desproporcional de ruído quando o denominador (soma das
+    // similaridades) é muito pequeno — cenário comum em bases de dados pequenas, onde poucos produtos do
+    // histórico têm muita sobreposição com outros usuários. Quanto maior o valor, mais o score
+    // previsto é "suavizado" em direção a zero quando há pouca evidência de similaridade.
+    private static final double REGULARIZATION_CONSTANT = 1.0;
+
     private final CosineSimilarityCalculator calculator;
 
     public ProductRecommendationEngine(CosineSimilarityCalculator calculator) {
@@ -48,7 +55,7 @@ public class ProductRecommendationEngine {
                 numerator += similarity * entry.getValue();
                 denominatorSum += Math.abs(similarity);
             }
-            double predictedScore = (denominatorSum == 0.0) ? 0.0 : numerator /denominatorSum;
+            double predictedScore = numerator / (denominatorSum + REGULARIZATION_CONSTANT);
             candidateScores.put(candidate, predictedScore);
         }
 
