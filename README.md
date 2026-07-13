@@ -188,5 +188,7 @@ Para rodar os testes:
 ## Desenvolvido por:
 
 Enzo Mendes Novaes Santos
+
 LinkedIn: https://www.linkedin.com/in/enzo-mendes-49896b285/
+
 GitHub: https://github.com/EnzoMendes34
